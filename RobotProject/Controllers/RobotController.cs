@@ -7,25 +7,14 @@ namespace RobotProject.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class RobotController : ControllerBase ///Maps Request to a response
+    public class RobotController : ControllerBase
     {
-        /*private static readonly string[] Summaries = new[]
-        {
-            "Water Source"
-        };*/
+        
 
         private readonly ILogger<RobotController> _logger;
         private readonly LocationService _service;
 
-        //private List<Location> _location = new List<Location>()
-        //{
-        //    new Location()
-        //    {
-        //       /// Name= "Pacific Ocean",
-        //      //  Longitude= 8,
-        //        //Latitude= 125,
-        //    }
-        //};
+     
 
         public RobotController(LocationService service, ILogger<RobotController> logger)
         {
@@ -33,32 +22,24 @@ namespace RobotProject.Controllers
             _logger = logger;
         }
 
-        [HttpGet(Name = "RobotSpotted")] ///EndPoint
-        public string Get()
-        {
-            
-            {
-                return "Water Source";
-            }
-           
-        }
-        [HttpPost(Name = "RobotSpotted")] ///EndPoint
+
+        [HttpPost(Name = "RobotSpotted")] 
         public async Task<string> Post(Location location, CancellationToken token)
-       /// public Location Post(Location location, CancellationToken token)
+       
         {
 
             
-                 _logger.Log(LogLevel.Information, new EventId(),null,"Location name sent:" + location.Suburb, null); ///logging location data
+                 _logger.Log(LogLevel.Information, new EventId(),null,"Location name sent:" + location.Suburb, null); 
 
                 
-                ////Need to deserialise the json data
+                
                 string NearbyWater = await _service.GetNearestWaterFromLocation(location);
-                //var x = await _service.GetNearestWaterFromLocation(location);
+                
                 JsonSerializer.Serialize(NearbyWater);
                 Class1[] water =JsonSerializer.Deserialize<Class1[]>(NearbyWater); 
 
-                 return $"The nearest body of water to {location.Suburb} is { water[0].display_name}"; //Referencing json name file 
-                                                                              //water;
+                 return $"The nearest body of water to {location.Suburb} is { water[0].display_name}";
+                                                                             
               
             
 
