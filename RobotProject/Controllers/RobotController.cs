@@ -17,15 +17,15 @@ namespace RobotProject.Controllers
         private readonly ILogger<RobotController> _logger;
         private readonly LocationService _service;
 
-        private List<Location> _location = new List<Location>()
-        {
-            new Location()
-            {
-                Name= "Pacific Ocean",
-                Longitude= 8,
-                Latitude= 125,
-            }
-        };
+        //private List<Location> _location = new List<Location>()
+        //{
+        //    new Location()
+        //    {
+        //       /// Name= "Pacific Ocean",
+        //      //  Longitude= 8,
+        //        //Latitude= 125,
+        //    }
+        //};
 
         public RobotController(LocationService service, ILogger<RobotController> logger)
         {
@@ -48,7 +48,7 @@ namespace RobotProject.Controllers
         {
 
             
-                 _logger.Log(LogLevel.Information, new EventId(),null,"Location name sent:" + location.Name, null); ///logging location data
+                 _logger.Log(LogLevel.Information, new EventId(),null,"Location name sent:" + location.Suburb, null); ///logging location data
 
                 
                 ////Need to deserialise the json data
@@ -57,7 +57,7 @@ namespace RobotProject.Controllers
                 JsonSerializer.Serialize(NearbyWater);
                 Class1[] water =JsonSerializer.Deserialize<Class1[]>(NearbyWater); 
 
-                 return $"The nearest body of water is { water[0].display_name}"; //Referencing json name file 
+                 return $"The nearest body of water to {location.Suburb} is { water[0].display_name}"; //Referencing json name file 
                                                                               //water;
               
             
