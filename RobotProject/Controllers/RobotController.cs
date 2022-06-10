@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RobotProject.Services;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace RobotProject.Controllers
 {
@@ -45,16 +47,20 @@ namespace RobotProject.Controllers
        /// public Location Post(Location location, CancellationToken token)
         {
 
-            {
-                // _logger.Log(LogLevel.Information, new EventId(),null,"Location name sent:" + location.Name, null); ///logging location data
+            
+                 _logger.Log(LogLevel.Information, new EventId(),null,"Location name sent:" + location.Name, null); ///logging location data
 
-
+                
                 ////Need to deserialise the json data
+                string NearbyWater = await _service.GetNearestWaterFromLocation(location);
+                //var x = await _service.GetNearestWaterFromLocation(location);
+                JsonSerializer.Serialize(NearbyWater);
+                Class1[] water =JsonSerializer.Deserialize<Class1[]>(NearbyWater); 
 
-                var x = await _service.GetNearestWaterFromLocation(location);
-                 return  $"The nearest body of waer to {location.Name} is {x}"; //Referencing json name file 
-                /// return _location.First();  
-            }
+                 return $"The nearest body of water is { water[0].display_name}"; //Referencing json name file 
+                                                                              //water;
+              
+            
 
         }
     }
